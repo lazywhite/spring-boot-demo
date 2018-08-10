@@ -7,6 +7,7 @@
 
 package com.example.demo.controller;
 
+import java.util.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,25 +15,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.demo.entity.Person;
-import com.example.demo.repository.PersonRepository;
+import com.example.demo.mapper.PersonMapper;
 
 
 @RestController
 @RequestMapping(path="/person")
 public class PersonController {
     @Autowired
-    private PersonRepository personRepository;
+    private PersonMapper personMapper;
 
-    @RequestMapping("/all")
-    public @ResponseBody Iterable<Person> getAllPerson(){
-        return personRepository.findAll();
-    }
-	@GetMapping(path="/add") // Map ONLY GET Requests
-	public @ResponseBody String addNewUser (@RequestParam String name) {
-		Person n = new Person();
-		n.setName(name);
-		personRepository.save(n);
-		return "Saved";
+	@GetMapping(path="/query")
+	public @ResponseBody Person findUser (@RequestParam String name) {
+		Person n = personMapper.findByName(name);
+		return n;
+	}
+	@GetMapping(path="/all")
+	public @ResponseBody List<Person> findAllPerson() {
+		return personMapper.findAll();
 	}
 
 }
