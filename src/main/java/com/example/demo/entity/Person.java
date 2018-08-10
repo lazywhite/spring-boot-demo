@@ -16,7 +16,8 @@ import javax.persistence.Id;
 @Entity
 public class Person {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    //如果字段自增, 必须使用此策略
+    @GeneratedValue(strategy=GenerationType.IDENTITY) 
     private Integer id;
     private String name;
      
