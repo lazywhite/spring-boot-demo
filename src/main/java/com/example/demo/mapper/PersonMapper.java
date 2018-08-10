@@ -15,8 +15,9 @@ public interface PersonMapper {
     @Select("select * from person where name = #{name}")
     Person findByName(@Param("name") String name);
 
+
     @Select("select id, name from person")
-    List<Person> findAll();
+    List<Person> findAll(); //必须使用List, 不能是Iterable
 
 }
 
